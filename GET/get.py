@@ -1,10 +1,17 @@
 #!/usr/bin/python3
 import requests
 
-url = "https://jsonplaceholder.typicode.com/posts"
+ses = requests.session()
 
-r = requests.get(url)
+payload = {
+    'id':'2241',
+    'holdthedoor':'Enviar'
+}
 
-data = r.json()
+response = ses.post(url="http://158.69.76.135/level0.php",data=payload)
 
-print(data)
+print(response.status_code)
+print("============")
+print(response.content)
+
+
