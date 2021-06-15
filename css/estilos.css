@@ -1,5 +1,6 @@
 body
 {
+    background: black;
     color: gray;
     font-family: arial;
     text-align: center;
@@ -11,7 +12,7 @@ body
     box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.75);
     font-weight: bold;
     margin: 0;
-    padding: 0.5em;
+    padding: 0.5em 0 0.5em 2em;
 
 }
 #cabecera #tagline
@@ -30,6 +31,7 @@ body
 }
 #post
 {
+    background:  white;
     padding: 1em;
     font-size: 20px; 
 }
