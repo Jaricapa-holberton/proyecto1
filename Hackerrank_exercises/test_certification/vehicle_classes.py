@@ -22,13 +22,13 @@ class Car:
             self.max_speed = max_speed
             self.unit_speed = unit_speed
 
-        def __str__(self):
-            """
-            Print an string of a Car object.
-            """
+    def __str__(self):
+        """
+        Print an string of a Car object.
+        """
 
-            rep_car = "Car with the maximum speed of" + " " + str(max_speed) + " " + str(unit_speed)
-            return(rep_car)
+        rep_car = "Car with the maximum speed of" + " " + str(self.max_speed) + " " + str(self.unit_speed)
+        return(rep_car)
 
 class Boat:
     '''A class to represent a Boat.'''
@@ -45,13 +45,13 @@ class Boat:
             self.max_speed = max_speed
             self.unit_speed = unit_speed
 
-        def __str__(self):
-            """
-            Print an string of a Boat object.
-            """
+    def __str__(self):
+        """
+        Print an string of a Boat object.
+        """
 
-            rep_boat = "Car with the maximum speed of" + " " + str(max_speed) + " " + str(unit_speed)
-            return(rep_boat)
+        rep_boat = "Boat with the maximum speed of" + " " + str(self.max_speed) + " " + str(self.unit_speed)
+        return(rep_boat)
 
 
 if __name__ == '__main__':
