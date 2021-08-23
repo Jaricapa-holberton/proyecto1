@@ -1,0 +1,2 @@
+referencias:
+    * Scrapear todas las casas de Mercado Libre - La mejor casa al menor precio - Python - BS4 - Selenium: https://youtu.be/w04Vi54pSxo
