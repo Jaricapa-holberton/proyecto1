@@ -1,0 +1,22 @@
+<!-- Enter your HTML code here -->
+<!-- https://webdev99.com/day-8-create-a-button-10-days-of-javascript/ -->
+<!-- https://stackoverflow.com/questions/17264978/how-to-change-innerhtml-by-adding-a-integer-value-to-element -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Button</title>
+        <link rel="stylesheet" href="button.css" type="text/css">  
+    </head>
+    <body>
+        <button id="btn" onclick="buttonClick()">0</button>
+        <script>            
+            var myScore = document.getElementById("btn");
+            myScore.onclick = function () {
+                var newScore = document.getElementById("btn").innerHTML;
+                var value = parseInt(newScore,10) + 1;
+                document.getElementById("btn").innerHTML = value;
+            };         
+        </script>
+    </body>
+</html>
