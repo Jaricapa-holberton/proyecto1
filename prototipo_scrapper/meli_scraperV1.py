@@ -2,6 +2,8 @@
 """
 First prototype for scrap flats in Mercadolibre
 """
+#https://www.youtube.com/watch?v=w04Vi54pSxo&t=3116s
+
 
 # paser for the location string to split adress, city and region
 def get_address(data):
