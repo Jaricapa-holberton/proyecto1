@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
-First prototype for scrap flats in Mercadolibre
+First prototype for scrap house in Mercadolibre
 """
 #https://www.youtube.com/watch?v=w04Vi54pSxo&t=3116s
-
+import app_conection_sql
 
 # paser for the location string to split adress, city and region
 def get_address(data):
@@ -21,7 +21,7 @@ def get_address(data):
 
 # get the data of the house and convert it as object
 def house_li_html_to_obj(house_li_html):
-        # find the images of the flats
+        # find the images of the house
         # because of new internet protocols... after a few donwloads of some items
         # the browser dont donwload the url from source, instead, just write were to find it
         # if you want (see lazy-loadable for details)
@@ -32,17 +32,17 @@ def house_li_html_to_obj(house_li_html):
             img_url = img['data-src']
         except:
             img_url = img['src']
-        # find the price of the flats
+        # find the price of the house
         price = str(house_li_html.find(class_="price-tag-fraction").text)
         price = int(price.replace('.', ''))
-        # find the title ads of the flats
+        # find the title ads of the house
         title = str(house_li_html.find(class_="ui-search-item__title").text)
-        # find the locations of the flats
+        # find the locations of the house
         address = str(house_li_html.find(class_="ui-search-item__group__element ui-search-item__location").text)
         address = get_address(address)
         # because the area and rooms share the same class... i made two list indepently for save the data
         # but, i first required split the two elements
-        # find the area size and the number of rooms of the flats
+        # find the area size and the number of rooms of the house
         all_attributes = house_li_html.find_all(class_="ui-search-card-attributes__attribute")
         area_size = "NA"
         rooms = "NA"
@@ -57,7 +57,7 @@ def house_li_html_to_obj(house_li_html):
             just_rooms = str(all_attributes[1].text)
             just_rooms = just_rooms.split()
             rooms = int(just_rooms[0])
-        # find the url of the flats
+        # find the url of the house
         urls = str(house_li_html.find("a")["href"])
         # return the object
         return {"img_url" : img_url, "price" : price, "title" : title, 
@@ -79,13 +79,12 @@ if __name__ == "__main__":
     page_content = response.text
     # scrap and parse from the html page
     soup = BeautifulSoup(page_content, 'lxml')
-    # the 'li' items with the class 'ui-search-layout__item' have the flats
+    # the 'li' items with the class 'ui-search-layout__item' have the house
     # find the 'li' items with the class 'ui-search-layout__item'
     all_house_li = soup.find_all("li", class_="ui-search-layout__item")
     # print every house parsed from the url
     idx0 = 0
     while(idx0 < len(all_house_li)):
-        house = house_li_html_to_obj(all_house_li[idx0])
-        print(house)
+        house_obj = house_li_html_to_obj(all_house_li[idx0])
+        app_conection_sql.insert_house(house_obj)
         idx0 += 1
-    
