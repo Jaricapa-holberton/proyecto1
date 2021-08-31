@@ -5,7 +5,8 @@ First prototype for scrap house in Mercadolibre
 #https://www.youtube.com/watch?v=w04Vi54pSxo&t=3116s
 import app_conection_sql
 
-# paser for the location string to split adress, city and region
+# parser for the location string to split adress, city and region
+# ATTENTION -----> get a better way to refactor this parser, because a lot of rooms lost their info for the "partAmount < 3"
 def get_address(data):
     part = data.split(',')
     partAmount = len(part)
@@ -70,7 +71,8 @@ if __name__ == "__main__":
     # using request
     import requests
     from bs4 import BeautifulSoup
-    web_page_url = "https://listado.mercadolibre.com.co/inmuebles/arriendo/valle-del-cauca/cali/#applied_filter_id%3Dcity%26applied_filter_name%3DCiudades%26applied_filter_order%3D2%26applied_value_id%3DTUNPQ0NBTDYyZDA0%26applied_value_name%3DCali%26applied_value_order%3D4%26applied_value_results%3D3152%26is_custom%3Dfalse"
+    # Cali ---> web_page_url = "https://listado.mercadolibre.com.co/inmuebles/arriendo/valle-del-cauca/cali/#applied_filter_id%3Dcity%26applied_filter_name%3DCiudades%26applied_filter_order%3D2%26applied_value_id%3DTUNPQ0NBTDYyZDA0%26applied_value_name%3DCali%26applied_value_order%3D4%26applied_value_results%3D3152%26is_custom%3Dfalse"
+    web_page_url = "https://listado.mercadolibre.com.co/inmuebles/arriendo/valle-del-cauca/jamundi/#applied_filter_id%3Dcity%26applied_filter_name%3DCiudades%26applied_filter_order%3D2%26applied_value_id%3DTUNPQ0pBTTIwMTk%26applied_value_name%3DJamundí%26applied_value_order%3D11%26applied_value_results%3D140%26is_custom%3Dfalse"
     # Add a User-Agent header to simulate a real web browser to send the requests. The User-Agent header should be saved in a dictionary object.
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36'}
     # Make an HTTP get requests to the webserver by the requests module get method, and the get method returns a response object.

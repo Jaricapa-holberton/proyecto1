@@ -27,7 +27,7 @@ def query_execute(query, params = ""):
 
 # create the table data
 def create_table_meli_houses():
-    create_table_user = "CREATE TABLE IF NOT EXISTS `meli_schema`.`mercadolibre_houses` (`img_url` VARCHAR(300) NULL, `price` INT(20) NULL, `title` VARCHAR(200) NULL, `address` VARCHAR(100) CHARACTER SET `utf8` NULL, `city` VARCHAR(50) NULL, `region` VARCHAR(50) NULL, `area_size` INT(20) NULL, `rooms` INT(20) NULL, `urls` VARCHAR(300) NULL);"
+    create_table_user = "CREATE TABLE IF NOT EXISTS `meli_schema`.`mercadolibre_houses` (`id_house` INT NOT NULL AUTO_INCREMENT `img_url` VARCHAR(300) NULL, `price` INT(20) NULL, `title` VARCHAR(200) NULL, `address` VARCHAR(100) CHARACTER SET `utf8` NULL, `city` VARCHAR(50) NULL, `region` VARCHAR(50) NULL, `area_size` INT(20) NULL, `rooms` INT(20) NULL, `urls` VARCHAR(300) NULL), ADD PRIMARY KEY (`id_house`, `id`), ADD UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE;"
     query_execute(create_table_user)
     return 1
 
