@@ -6,7 +6,7 @@ First prototype for scrap house in Mercadolibre
 import app_conection_sql
 
 # parser for the location string to split adress, city and region
-# ATTENTION -----> get a better way to refactor this parser, because a lot of rooms lost their info for the "partAmount < 3"
+# ATTENTION -----> get a better way to refactor this parser, because a lot of houses lost their adress info for the "partAmount < 3" (maybe just have the city, the address or the region)
 def get_address(data):
     part = data.split(',')
     partAmount = len(part)
@@ -16,6 +16,8 @@ def get_address(data):
         return {'address': " ".join(part[:len(part)-3]), 'city': part[partAmount-2], 'region': part[partAmount-1]}
     elif(partAmount < 3):
         for i in range(0, 100):
+            # at the momment, the most common error is not address... so we can save the city and the region
+            # e.g: "error: Jamundí, Valle Del Cauca" (data it's just the city and the region -len < 3-)
             print("error: ")
             print(data)
             return {'address': 'NA', 'city': 'NA', 'region': 'NA'}
