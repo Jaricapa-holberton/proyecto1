@@ -1,6 +1,8 @@
 """Posts models"""
 # acces to database
-from django.db import models
+
+# this code was dissable for security reasons, now we use the Django admin features
+""" from django.db import models
 
 class User(models.Model):
     email = models.EmailField(unique=True)
@@ -13,4 +15,6 @@ class User(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     country = models.CharField(max_length=20, null=True)
-    city = models.CharField(max_length=30, null=True)
+    city = models.CharField(max_length=30, null=True) """
+
+# continue here

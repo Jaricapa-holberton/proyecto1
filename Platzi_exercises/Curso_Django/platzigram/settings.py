@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # local apps
-    'posts'
+    'posts',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'platzigram.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
+        "NAME": "prueba",
         "USER": "postgres",
         "PASSWORD": "super",
         "HOST": "localhost",
