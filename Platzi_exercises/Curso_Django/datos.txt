@@ -1,0 +1,153 @@
+sudo add-apt-repository -y ppa:jonathonf/python-3.8
+sudo apt-get update -y
+sudo apt-get install -y python3.8
+sudo apt-get install -y python3.8-dev
+sudo apt-get install -y python3.8-distutils
+sudo ln -s /usr/bin/python3.8 /usr/local/bin/python3
+sudo wget https://bootstrap.pypa.io/get-pip.py -O /home/ja95aricapa/get-pip.py
+python3.8 /home/ja95aricapa/get-pip.py
+sudo rm /home/ja95aricapa/get-pip.py
+sudo ln -s /usr/local/bin/pip /usr/local/bin/pip3
+``
+
+## Verificación de la descarga
+
+1. Correr `python3 --version`
+2. Correr `pip3 --version`
+
+## Entorno virtual
+
+1. Correr `python3 -m venv ENTORNO` donde `ENTORNO` sea el nombre deseado
+2. Correr `source ENTORNO/bin/activate` para activar el entorno
+3. Correr `deactivate` para desactivar el entorno
+
+## Instalación de django
+
+1. Activar entorno virtual
+2. Correr `pip install django -U`
+
+## usar django
+
+abriendo la carpeta raiz del proyecto , buscar donde se encuentré el archivo manage.py
+
+1)  entrar al virtual enviroment con:
+
+source proyecto/bin/activate 
+alias env-proyecto='source proyecto/bin/activate'
+
+2) apenas sepas que el venv está funcionando, correr el servidor con:
+
+python3 manage.py runserver
+alias runserver=python3 manage.py runserver
+
+3) cuando se necesite hacer migraciones usar:
+python3 manage.py makemigrations
+alias makemigrations=python3 manage.py makemigrations
+
+python3 manage.py migrate
+alias migrate=python3 manage.py migrate
+
+todas las migraciones, cuando son por primera vez, crean una tabla si el modelo fue adecuadamente creado.
+la tabla por defecto tendra el nombre de la carpeta donde se encuentra y el usuario... un ejemplo es...
+para la carpeta posts en el proyecyo platzigram, la tabla que se creó fue posts_user
+
+4) si deseas ejecutar los scripts en python con el interprete de python, recuerda usar la shell de django
+porque no vas a poder cargar todos lor modulos del proyecto correctamente en el interprete default
+
+para eso, usa python3 manage.py shell y abres el interprete especial de django
+
+5) crear objetos (en la shell de django) para agregar registros a la tabla
+
+from <proyecto>.models import User
+
+from posts.models import User
+
+en la documentacion aparecen al menos 2 maneras de crear objetos, instanciar la clase objects o usar el metodo create:
+obj = objects()
+
+obj = <module>.objects.create(attributes)
+
+ej crear usario de platzigram: 
+
+pablo = User.objects.create(email='hola@gmail.com',password='12345',)) (create)
+
+ó
+
+pablo = User() (instanceado)
+pabhlo.email = 'hola@gmail.com'
+
+## entorno platzigram para
+
+python3 -m venv platzigram . 
+
+source platzigram/bin/activate 
+alias env-platzigram='source platzigram/bin/activate'
+
+python3 manage.py runserver
+alias runserver=python3 manage.py runserver
+
+## Uso de postgresql 
+
+1) acceder con usuario general 
+
+sudo -i -u postgres 
+
+2) probar que la db está conectada
+
+sudo service postgresql start
+
+psql
+
+
+------------------------------>
+NOTA:  hasta ahora encontré como error que:
+
+I'm trying to run psql on my Vagrant machine, but I get this error:
+
+psql: could not connect to server: No such file or directory
+
+Is the server running locally and accepting connections on 
+Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
+
+me funcionó esto: 
+
+https://stackoverflow.com/questions/42653690/psql-could-not-connect-to-server-no-such-file-or-directory-5432-error/50882756
+
+It seems that sometimes by editing some psotgresql-related config files, one can accidentally change the permissions of the file.
+maybe right now the pg_hba.conf file has no read permissions (rw-r-----). So...
+
+cd /etc/postgresql/12/main 
+ls -l
+
+Note how pg_hba.conf belongs to root, and users cannot even read it. This causes postgres to not be able to open this file and therefore not be able to start the server, throwing the error seen in the original question.
+
+By running "sudo chmod +r pg_hba.conf" I was able to make this file once again accessible to the postgres user and then after running "sudo service postgresql start"
+Was able to get the server running again.
+------------------------------>
+
+3) estando dentro de la consola de postgres te sales para terminar de configurar
+
+4) crear usuario con permmisos libres
+createuser --interactive
+Enter name of role to add: super
+Shall the new role be a superuser? (y/n) y
+
+5) crear la base de datos
+
+------------------------------>
+NOTA: postgres por defecto se conecta a la base datos que tiene el misnmo nombre del usuario, por eso habrá que llamarla igual a menos que lo requiera
+------------------------------>
+
+createdb super
+
+6) asignar password
+
+estando dentro de la consola de postgres
+
+\password <clave>
+
+7) entrar a la base de datos
+
+estando dentro de la consola de postgres
+
+psql -U <usuario> -W
