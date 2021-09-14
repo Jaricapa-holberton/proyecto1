@@ -1,0 +1,26 @@
+## Entorno virtual
+
+python3 -m venv platzigram
+
+source platzigram/bin/activate
+
+`deactivate` para desactivar el entorno
+
+## Instalación de django
+
+1. Activar entorno virtual
+2. Correr `python -m pip install Django`
+
+## Funcionamiento
+
+python3 manage.py runserver
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+## Administrator
+
+Username: jaime2
+Email address: ja95aricapa@gmail.com
+Password: abba12345
+
+si se pierde la contraseña usar esta info https://stackoverflow.com/questions/6358030/how-to-reset-django-admin-password

@@ -1,18 +1,14 @@
-<!-- basic html template for display the posts on the user feed -->
 <!DOCTYPE html>
-<html lang="en" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Platzigram</title>
-    <!-- Using bootstrap, check the documentation -->
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
     <br><br>
     <div class="container">
         <div class="row">
-        <!-- Create a space in the feed for every post in the post list -->
             {% for post in posts %}
             <div class="col-lg-4 offset-lg-4">
                 <div class="media">
