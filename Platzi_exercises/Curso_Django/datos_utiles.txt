@@ -4,12 +4,14 @@ python3 -m venv platzigram
 
 source platzigram/bin/activate
 
+
 `deactivate` para desactivar el entorno
 
 ## Instalación de django
 
 1. Activar entorno virtual
 2. Correr `python -m pip install Django`
+3. (POSTGRES) pip3 install psycopg2
 
 ## Funcionamiento
 
