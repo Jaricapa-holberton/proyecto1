@@ -15,7 +15,7 @@ def hello_world(request):
     ))
 
 
-def sorted(request):
+def sort(request):
     """
     A Django view that returns the given numbers in a Json format and in orden.
     Returns:
