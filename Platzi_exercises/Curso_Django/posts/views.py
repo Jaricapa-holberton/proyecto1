@@ -4,9 +4,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-# Utilities
-from datetime import datetime
-
 # Forms
 from posts.forms import PostForm
 

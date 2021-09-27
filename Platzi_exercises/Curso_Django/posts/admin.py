@@ -1,15 +1,16 @@
 """Posts model."""
+
+# Django
 from django.contrib import admin
+
+# Models
 from posts.models import Post
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    """Posts Admin model"""
+    """Post admin."""
 
-    list_display = ('pk', 'user', 'photo')
-    list_display_links = ('pk', 'user')
-    list_editable = ('photo',)
-    list_filter = (
-                'created',
-                'modified'
-    )
+    list_display = ('id', 'user', 'title', 'photo')
+    search_fields = ('title', 'user__username', 'user__email')
+    list_filter = ('created', 'modified')

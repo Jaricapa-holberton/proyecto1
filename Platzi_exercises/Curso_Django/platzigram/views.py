@@ -15,26 +15,25 @@ def hello_world(request):
     ))
 
 
-def sort(request):
-    """
-    A Django view that returns the given numbers in a Json format and in orden.
-    Returns:
-        [Json]: Sorted list of the given numbers.
-    """
-    numbers = request.GET['numbers']
-    list_numbers = list(numbers.split(",")) #divide los strings con comas y los almacena en una lista
-    list_numbers = list(map(int, list_numbers)) #conveirte la lista de strings en enteros
-    list_numbers.sort() #ordena la lista
-    return HttpResponse(json.dumps(list_numbers)) #retorna json
+def sort_integers(request):
+    """Return a JSON response with sorted integers."""
+    numbers = [int(i) for i in request.GET['numbers'].split(',')]
+    sorted_ints = sorted(numbers)
+    data = {
+        'status': 'ok',
+        'numbers': sorted_ints,
+        'message': 'Integers sorted successfully.'
+    }
+    return HttpResponse(
+        json.dumps(data, indent=4),
+        content_type='application/json'
+    )
 
 
 def say_hi(request, name, age):
-    """
-    A Django view that create a personalized url path as the user's name.
-    As well, greeting the user if successful.
-    """
+    """Return a greeting."""
     if age < 12:
-        message = "Sorry {}, Age must be over 12 years old to be allowed for view this page.".format(name)
+        message = 'Sorry {}, you are not allowed here'.format(name)
     else:
-        message = "Hello {}, wellcome to Platzigram!".format(name)
+        message = 'Hello, {}! Welcome to Platzigram'.format(name)
     return HttpResponse(message)
