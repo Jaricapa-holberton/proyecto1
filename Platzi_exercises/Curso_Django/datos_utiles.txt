@@ -1,8 +1,8 @@
 ## Entorno virtual
 
-python3 -m venv postigram
+python3 -m venv platzigram
 
-source postigram/bin/activate
+source platzigram/bin/activate
 
 
 `deactivate` para desactivar el entorno

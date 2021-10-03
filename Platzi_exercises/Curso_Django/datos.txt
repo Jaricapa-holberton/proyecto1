@@ -49,7 +49,7 @@ alias migrate=python3 manage.py migrate
 
 todas las migraciones, cuando son por primera vez, crean una tabla si el modelo fue adecuadamente creado.
 la tabla por defecto tendra el nombre de la carpeta donde se encuentra y el usuario... un ejemplo es...
-para la carpeta posts en el proyecyo postigram, la tabla que se creó fue posts_user
+para la carpeta posts en el proyecyo platzigram, la tabla que se creó fue posts_user
 
 4) si deseas ejecutar los scripts en python con el interprete de python, recuerda usar la shell de django
 porque no vas a poder cargar todos lor modulos del proyecto correctamente en el interprete default
@@ -67,7 +67,7 @@ obj = objects()
 
 obj = <module>.objects.create(attributes)
 
-ej crear usario de postigram: 
+ej crear usario de platzigram: 
 
 pablo = User.objects.create(email='hola@gmail.com',password='12345',)) (create)
 
@@ -76,12 +76,12 @@ pablo = User.objects.create(email='hola@gmail.com',password='12345',)) (create)
 pablo = User() (instanceado)
 pabhlo.email = 'hola@gmail.com'
 
-## entorno postigram para
+## entorno platzigram para
 
-python3 -m venv postigram . 
+python3 -m venv platzigram . 
 
-source postigram/bin/activate 
-alias env-postigram='source postigram/bin/activate'
+source platzigram/bin/activate 
+alias env-platzigram='source platzigram/bin/activate'
 
 python3 manage.py runserver
 alias runserver=python3 manage.py runserver
