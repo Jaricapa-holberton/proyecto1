@@ -1,4 +1,4 @@
-"""Platzigram URLs module."""
+"""postigram URLs module."""
 
 # Django
 from django.contrib import admin
