@@ -4,11 +4,11 @@ from selenium import webdriver
 class RegisterNewUser(unittest.TestCase):
 
 	def setUp(self):
-		self.driver = webdriver.Chrome(executable_path = r'.\chromedriver.exe')
+		self.driver = webdriver.Chrome(executable_path = './chromedriver')
 		driver = self.driver
 		driver.implicitly_wait(30)
 		driver.maximize_window()
-		driver.get("http://demo.onestepcheckout.com/")
+		driver.get("http://demo-store.seleniumacademy.com/")
 	
 	def test_new_user(self):
 		driver = self.driver
