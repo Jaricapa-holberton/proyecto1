@@ -10,7 +10,7 @@ class LanguageOptions(unittest.TestCase):
 		driver.implicitly_wait(30)
 		driver.maximize_window()
 		driver.get("http://demo-store.seleniumacademy.com/")
-	
+
 	def test_select_language(self):
 		#el orden respeta como aparecen en la página
 		exposed_options = ['English', 'French', 'German']
@@ -24,7 +24,7 @@ class LanguageOptions(unittest.TestCase):
 
 		for option in select_language.options:
 			active_options.append(option.text)
-		
+
 		#verifico que la lista de opciones disponibles y activas sean indénticas
 		self.assertListEqual(exposed_options,active_options)
 
