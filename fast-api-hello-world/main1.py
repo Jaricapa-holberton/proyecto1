@@ -15,8 +15,12 @@ class Person(BaseModel):              #Se crea una clase que herede la clase Bas
     last_name: str
     age: int                          #Se usan los dos puntos y el tipo de dato para definir que tipo de dato va a llevar este atributo en JSON
     hair_color: Optional[str] = None
-    is_married: Optional[bool] = None #Para poder tener atributos opcionales con un tipo de dato, se usa la clase Optional[{type}] y se pone un valor por defecto que                                           sería None, que en bases de datos es null
+    is_married: Optional[bool] = None #Para poder tener atributos opcionales con un tipo de dato, se usa la clase Optional[{type}] y se pone un valor por defecto que sería None, que en bases de datos es null
 
+class Location(BaseModel):
+    city: str 
+    state: str
+    country: str        
 
 @app.get("/")                         #Un path operation que usa el método get en la ruta /
 def home():
@@ -59,3 +63,20 @@ def show_person(
     )
 ):
     return {person_id: "It exists!"}
+
+# Validations: Request Body
+@app.put("/person/{person_id}")
+def update_person(
+    person_id: int = Path(
+        ...,
+        title="Person ID",
+        description="This is the person ID",
+        gt=0
+    ),
+    person: Person = Body(...),
+    location: Location = Body(...)
+):
+    result = dict(person)
+    result.update(dict(location))
+
+    return result
