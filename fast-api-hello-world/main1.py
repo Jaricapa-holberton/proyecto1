@@ -1,8 +1,9 @@
 #Python
 from typing import Optional
+from enum import Enum
 
 #Pydantic
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 #FastAPI
 from fastapi import FastAPI, Body, Query, Path
@@ -10,17 +11,36 @@ from fastapi import FastAPI, Body, Query, Path
 app = FastAPI()
 
 #Models
-class Person(BaseModel):              #Se crea una clase que herede la clase BaseModel, los atributos de la clase serían los atributos de la entidad/modelo
-    first_name: str 
-    last_name: str
-    age: int                          #Se usan los dos puntos y el tipo de dato para definir que tipo de dato va a llevar este atributo en JSON
-    hair_color: Optional[str] = None
-    is_married: Optional[bool] = None #Para poder tener atributos opcionales con un tipo de dato, se usa la clase Optional[{type}] y se pone un valor por defecto que sería None, que en bases de datos es null
 
 class Location(BaseModel):
     city: str 
     state: str
-    country: str        
+    country: str
+    
+class HairColor(Enum):
+    white = 'white'
+    black = 'black'
+    brown = 'brown'
+    blonde = 'blonde'
+
+class Person(BaseModel):
+    first_name: str = Field(
+        ...,
+        min_length=1,
+        max_length=50
+    )
+    last_name: str = Field(
+        ...,
+        min_length=1,
+        max_length=50
+    )
+    age: int = Field(
+        ...,
+        gt=0,
+        le=130
+    )
+    hair_color: Optional[HairColor] = Field(default=None)
+    is_married: Optional[bool] = Field(default=None)  
 
 @app.get("/")                         #Un path operation que usa el método get en la ruta /
 def home():
