@@ -5,7 +5,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 #FastAPI
-from fastapi import FastAPI, Body, Query
+from fastapi import FastAPI, Body, Query, Path
 
 app = FastAPI()
 
@@ -26,13 +26,36 @@ def home():
 def create_person(person: Person = Body(...)):  #Se usa un Request Body, se importa la clase Body de FastAPI esta en su constructor usa un parametro, en este caso son                                                    los 3 puntos, que indican que ese Request Body es obligatorio. Se usa una variable que serviría como parametro para                                                      usar el modelo, en este caso person que sería tipo Person
     return person
 
-# Validaciones.
-@app.get("/person/detail") # Ruta para realizar la consulta.
-def show_person(
-	#Opcional.
-	name: Optional[str] = Query(None, min_length=1, max_length=50),
-	# Obligatorio.
-	age: int = Query(...)
-   ):
+# Validations: Query Parameters
 
-   return {name: age}
+@app.get('/person/detail')
+def show_person(
+    name: Optional[str] = Query(
+        None,
+        min_length=1,
+        max_length=30,
+        regex='^[A-Za-z]*$',
+        title="Person Name",
+        description="This is the person name. It's between 1 and 30 characters"
+    ),
+    age: int = Query(
+        ...,
+        title="Person Age",
+        description="This is the person age. It's required"
+    )
+):
+    return {name: age}
+
+
+# Validations: Path Parameters
+
+@app.get('/person/detail/{person_id}')
+def show_person(
+    person_id: int = Path(
+        ...,
+        title="Person ID",
+        description="This is the person ID. It's required",
+        gt=0
+    )
+):
+    return {person_id: "It exists!"}
