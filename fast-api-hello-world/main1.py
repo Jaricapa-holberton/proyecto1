@@ -2,10 +2,10 @@ from typing import Optional
 from enum import Enum
 
 # Pydantic
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path
+from fastapi import FastAPI, Body, Query, Path, Response, status
 
 app = FastAPI()
 
@@ -40,52 +40,53 @@ class Location(BaseModel):
         example="United States",
     )
 
-class Person(BaseModel):
+class PersonBase(BaseModel):
     first_name: str = Field(
         ...,
         min_length=1,
         max_length=50,
-        example="Miguel"
+        example='Marty'
         )
     last_name: str = Field(
         ...,
         min_length=1,
         max_length=50,
-        example="Gonzalez"
+        example='McFly'
         )
     age: int = Field(
         ...,
         gt=0,
         le=115,
-        example=25
-    )
-    hair_color: Optional[HairColor  ] = Field(default=None, example=HairColor.brown)
-    is_married: Optional[bool] = Field(default=None, example=False)
+        example='20'
+        )
+    hair_color: Optional[HairColor] = Field(default=None, example='black')
+    is_married: Optional[bool] = Field(default=None, example='False')
 
-    class Config:
-       schema_extra = {
-           "example": {
-               "first_name": "Facundo",
-               "last_name": "García Martoni",
-               "age": 29,
-               "hair_color": "blonde",
-               "is_married": False,
-           }
-       }
 
-@app.get("/")
+class Person(PersonBase):
+    password: str = Field(
+        ...,
+        min_length=8
+        )
+
+class PersonOut(PersonBase):
+    pass
+
+
+@app.get(path="/", status_code=status.HTTP_200_OK)
 def home():
     return {"Hello": "World!"}
 
 # Request and Response Body
 
-@app.post("/person/new")
+@app.post(path='/person/new', response_model=PersonOut, status_code=status.HTTP_201_CREATED)
 def create_person(person: Person = Body(...)):
     return person
 
+
 # Validaciones: Query Parameters
 
-@app.get("/person/detail")
+@app.get(path="/person/detail", status_code=status.HTTP_200_OK)
 def show_person(
     name: Optional[str] = Query(
         None, min_length=1,
@@ -105,7 +106,7 @@ def show_person(
 
 # Validaciones Path Paremeters
 
-@app.get("/person/detail/{person_id}")
+@app.get(path="/person/detail/{person_id}", status_code=status.HTTP_200_OK)
 def show_person(
     person_id: int = Path(
         ...,
@@ -117,19 +118,19 @@ def show_person(
 
 # Validaciones: Request Body
 
-@app.put("/person/{person_id}")
+
+@app.put(path="/person/{person_id}", status_code=status.HTTP_202_ACCEPTED)
 def update_person(
     person_id: int = Path(
         ...,
-        title="Person ID",
-        description="This is the person ID",
+        title='Person ID',
+        description='This is the person ID. It is required',
         gt=0,
-        example=123
+        example=32
     ),
     person: Person = Body(...),
-    #location: Location = Body(...)
+    location: Location = Body(...)
 ):
-    #results = person.dict()
-    #results.update(location.dict())
-    #return results
-    return person
+    results = person.dict()
+    results.update(location.dict())
+    return results
