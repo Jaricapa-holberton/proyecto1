@@ -5,7 +5,7 @@ from enum import Enum
 from pydantic import BaseModel, Field, EmailStr
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path, Response, status
+from fastapi import FastAPI, Body, Query, Path, Form, status, Header, Cookie, List, UploadFile, File
 
 app = FastAPI()
 
@@ -73,6 +73,11 @@ class PersonOut(PersonBase):
     pass
 
 
+class LoginOut(BaseModel):
+    username: str = Field(..., max_length=40, example="miguel1221")
+    message: str = Field(default="Login Succesfully!")
+
+
 @app.get(path="/", status_code=status.HTTP_200_OK)
 def home():
     return {"Hello": "World!"}
@@ -134,3 +139,60 @@ def update_person(
     results = person.dict()
     results.update(location.dict())
     return results
+
+
+# Forms
+@app.post(path="/login/", response_model=LoginOut, status_code=status.HTTP_202_ACCEPTED)
+async def login(username: str = Form(...), password: str = Form(...)):
+    return LoginOut(username=username)
+
+
+@app.post(
+    path='/contact',
+    status_code=status.HTTP_200_OK
+)
+def contact(
+    first_name: str = Form(
+        ...,
+        max_length=50,
+        min_length=1,
+        example='Peter'
+    ),
+    last_name: str = Form(
+        ...,
+        max_length=20,
+        min_length=1,
+        example='Chiguire'
+    ),
+    email: EmailStr = Form(
+        ...,
+        example='peterchiguire@gmail.com'
+    ),
+    message: str = Form(
+        ...,
+        min_length=1,
+        max_length=280,
+        example='Hola, estoy interesado en tu proyecto, jajaj xdddd'
+    ),
+    user_agent: Optional[str] = Header(default=None),
+    ads: Optional[str] = Cookie(default=None)
+):
+    return {
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'message': message,
+        'user_agent': user_agent,
+        'ads': ads
+    }
+
+
+@app.post(path='/post-image',)
+def post_image(
+    image: UploadFile = File(...)
+):
+    return {
+        'filename': image.filename,
+        'format': image.content_type,
+        'size(kb)': round(len(image.file.read()) / 1024, 2)
+    }
