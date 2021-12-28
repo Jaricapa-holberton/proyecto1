@@ -79,20 +79,43 @@ class LoginOut(BaseModel):
     message: str = Field(default="Login Succesfully!")
 
 
-@app.get(path="/", status_code=status.HTTP_200_OK, tags=["Home"])
+@app.get(path="/", status_code=status.HTTP_200_OK, tags=["Home"], summary="Display the home page")
 def home():
+    """
+    # Home
+
+    This path operation display the home page
+
+    ### Parameters
+    - None
+
+    ### Returns
+    A dictionary with a gretting
+    """
     return {"Hello": "World!"}
 
 # Request and Response Body
 
-@app.post(path='/person/new', response_model=PersonOut, status_code=status.HTTP_201_CREATED, tags=["Person"])
+@app.post(path='/person/new', response_model=PersonOut, status_code=status.HTTP_201_CREATED, tags=["Person"], summary="Create a new person")
 def create_person(person: Person = Body(...)):
+    """
+    # Create Person
+
+    This path operation creates a person in the app and save the information in the database
+
+    ### Parameters
+    - Request body parameter: 
+        - **person: Person** -> A person model with first name, last name, age, hair color and marital stauts
+
+    ### Returns
+    A person model with first name, last name, age, hair color and marital status
+    """
     return person
 
 
 # Validaciones: Query Parameters
 
-@app.get(path="/person/detail", status_code=status.HTTP_200_OK, tags=["Person"])
+@app.get(path="/person/detail", status_code=status.HTTP_200_OK, tags=["Person"], summary="Display all the persons in the database")
 def show_person(
     name: Optional[str] = Query(
         None, min_length=1,
@@ -116,7 +139,8 @@ persons = [1, 2, 3, 4, 5, 123]
 @app.get(
     path='/person/detail/{person_id}',
     status_code=status.HTTP_200_OK,
-    tags=["Person"]
+    tags=["Person"],
+    summary="Display a person by id"
 )
 def show_person(
     person_id: int = Path(
@@ -139,7 +163,7 @@ def show_person(
 # Validaciones: Request Body
 
 
-@app.put(path="/person/{person_id}", status_code=status.HTTP_202_ACCEPTED, tags=["Person"])
+@app.put(path="/person/{person_id}", status_code=status.HTTP_202_ACCEPTED, tags=["Person"], summary="Update the data of a person")
 def update_person(
     person_id: int = Path(
         ...,
@@ -157,7 +181,7 @@ def update_person(
 
 
 # Forms
-@app.post(path="/login/", response_model=LoginOut, status_code=status.HTTP_202_ACCEPTED, tags=["Login"])
+@app.post(path="/login/", response_model=LoginOut, status_code=status.HTTP_202_ACCEPTED, tags=["Login"], summary="Login a user person")
 async def login(username: str = Form(...), password: str = Form(...)):
     return LoginOut(username=username)
 
@@ -165,7 +189,8 @@ async def login(username: str = Form(...), password: str = Form(...)):
 @app.post(
     path='/contact',
     status_code=status.HTTP_200_OK,
-    tags=["Contact"]
+    tags=["Contact"],
+    summary="Create a new contact"
 )
 def contact(
     first_name: str = Form(
@@ -203,7 +228,7 @@ def contact(
     }
 
 
-@app.post(path='/post-image', status_code=status.HTTP_200_OK, tags=["Files"])
+@app.post(path='/post-image', status_code=status.HTTP_200_OK, tags=["Files"], summary="Create a new image post")
 def post_image(
     image: UploadFile = File(...)
 ):
