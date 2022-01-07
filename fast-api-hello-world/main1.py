@@ -131,6 +131,18 @@ def show_person(
         example="25"
         )
 ):
+    """
+    # Show Person
+
+    This path operation display all the persons in the database
+
+    ### Parameters
+    - Request body parameter: 
+        - **person: Person** -> A person model with first name, last name, age, hair color and marital stauts
+
+    ### Returns
+    A person model with first name, last name, age, hair color and marital status
+    """
     return {name: age}
 
 # Validaciones Path Paremeters
