@@ -31,3 +31,8 @@ Jaime Aricapa - [Github](https://github.com/Jaricapa-holberton)
 
 #### License:
 Public Domain. No copy write protection.
+
+#### References:
+https://fastapi.tiangolo.com/es/tutorial/sql-databases/
+https://neuralcovenant.com/2020/12/29/aprendiendo-fastapi-con-postgresql/
+https://cloud.google.com/appengine/docs/standard/python3/quickstart
